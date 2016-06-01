@@ -1,0 +1,59 @@
+<div class="container"  >
+   <form class="form-inline" name="billingform"  >
+   
+    <fieldset>
+        <legend>Add To The cart</legend>
+    <div class="form-group">
+       <input type="number" ng-change="Add(product)" ng-model="product.ProductId" class="form-control"  placeholder=" Enter product id">
+    </div>
+       
+    <div class="form-group">
+     <input type="text" ng-model="product.ProductName" class="form-control" ng-disabled="true"  placeholder=" Product name">
+    </div>
+  
+    <div class="form-group">
+      <input type="number"  ng-change="addMore(product)"  ng-model="product.Units" class="form-control" placeholder=" No of units">
+    </div>
+      
+    <div class="form-group">
+       <input type="text"  ng-model="product.Price" ng-disabled="true" class="form-control" ng-change="AddMore(product)" placeholder=" Per Unit price">
+    </div>
+     
+    <div class="form-group">
+       <input type="text" ng-model="product.TotalPrice" ng-disabled="true" class="form-control" placeholder=" Total price">
+    </div>
+    <br/>  
+        <span ng-show="empty" style="color:red">Please enter a Product Id</span> 
+    <br/> <br/>
+     <button type="button"  class="btn btn-default">Submit</button><br/><br/><br/>
+   
+         <span ng-show="inValid" style="color:red;font-size:19px;">Product with this Id does not exists</span>
+    
+    </fieldset>.
+   </form>
+    <div class="container">
+    <div class="table-responsive"  >
+      <table class="table" >
+         <thead>
+          <tr>
+            <th>ProductId</th>
+            <th>ProductName</th>
+            <th>Nuber of units</th> 
+            <th>Price/Item</th>
+            <th>TotalPrice</th>
+          </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat = "products in CartProduct">
+        <td>{{products.ProductId}}</td>
+        <td>{{products.ProductName}}</td>
+        <td>{{products.Units}}</td>
+        <td>{{products.Price}}</td>
+        <td>{{products.TotalPrice}}</td>
+      
+      </tr>
+    </tbody>
+      </table>
+    </div>
+    </div>
+</div>

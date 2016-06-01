@@ -1,0 +1,19 @@
+
+    <div class="container"  ng-controller="storecontroller">
+
+      <form class="form-signin" name="loginform" novalidate>
+        <h2 class="form-signin-heading">Please sign in</h2>
+        
+        <input type="text" class="form-control" name="username" ng-model="user.name" placeholder=" User Name" required >
+	   <br/>
+          <span ng-show="(loginform.username.$invalid && loginform.username.$touched) ">Please enter the user name</span>
+         
+        <input type="password" name="password" id="inputPassword" class="form-control" ng-model="user.password" placeholder=" Password" required>
+     
+           <span ng-show="loginform.password.$invalid && loginform.password.$touched ">Please enter the password</span>
+           <span ng-show="early">Please Enter all the Required field and valid correct credentials</span>
+        <button class="btn btn-lg btn-primary btn-block" ng-click="submit()">Sign in</button>
+      </form>
+       
+    </div> <!-- /container -->
+    
