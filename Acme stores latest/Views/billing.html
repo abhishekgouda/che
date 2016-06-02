@@ -4,7 +4,7 @@
     <fieldset>
         <legend>Add To The cart</legend>
     <div class="form-group">
-       <input type="number" ng-change="Add(product)" ng-model="product.ProductId" class="form-control"  placeholder=" Enter product id">
+       <input type="text" ng-change="Add(product)" ng-model="product.ProductId" class="form-control"  placeholder=" Enter product id">
     </div>
        
     <div class="form-group">
@@ -12,11 +12,11 @@
     </div>
   
     <div class="form-group">
-      <input type="number"  ng-change="addMore(product)"  ng-model="product.Units" class="form-control" placeholder=" No of units">
+      <input type="number"   ng-change="AddMore(product)"  ng-model="product.Units" class="form-control" placeholder=" No of units">
     </div>
       
     <div class="form-group">
-       <input type="text"  ng-model="product.Price" ng-disabled="true" class="form-control" ng-change="AddMore(product)" placeholder=" Per Unit price">
+       <input type="text"  ng-model="product.Price" ng-disabled="true" class="form-control"  placeholder=" Per Unit price">
     </div>
      
     <div class="form-group">
@@ -25,10 +25,11 @@
     <br/>  
         <span ng-show="empty" style="color:red">Please enter a Product Id</span> 
     <br/> <br/>
-     <button type="button"  class="btn btn-default">Submit</button><br/><br/><br/>
+     <button type="button" ng-click="Finalize(product)" class="btn btn-default">Submit</button><br/><br/><br/>
    
          <span ng-show="inValid" style="color:red;font-size:19px;">Product with this Id does not exists</span>
-    
+     
+              
     </fieldset>.
    </form>
     <div class="container">
@@ -44,7 +45,7 @@
           </tr>
     </thead>
     <tbody>
-      <tr ng-repeat = "products in CartProduct">
+      <tr ng-repeat = "products in CartProduct track by $index">
         <td>{{products.ProductId}}</td>
         <td>{{products.ProductName}}</td>
         <td>{{products.Units}}</td>

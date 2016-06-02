@@ -13,7 +13,7 @@ app.config(function($routeProvider){
     }).otherwise({redirectTo:'/login'});
             
 });
-app.controller('storecontroller',function($scope,$http,$location){
+app.controller('storecontroller',function($scope,$http,$location,$rootScope){
   
     
     $scope.submit = function() {
@@ -27,6 +27,7 @@ app.controller('storecontroller',function($scope,$http,$location){
           for(i=0; i < $scope.authorized.length; i++){
                  
                 if(($scope.user.name == $scope.authorized[i].name)&& ($scope.user.name == $scope.authorized[i].name)) {
+                 $rootScope.User = $scope.user.name;
                 $location.path('/billing'); 
                     break;
             
@@ -44,9 +45,10 @@ app.controller('storecontroller',function($scope,$http,$location){
     }
 });
 app.controller('Billingcontroller',function($scope,$http,$location){
-    
+        $scope.CartProduct=[];
  $http.get('js/inventory.json').success(function(data){
-       $scope.CartProduct = [];
+  
+
      $scope.AllProducts = data;
      $scope.Add=function(product) {
       
@@ -61,23 +63,54 @@ app.controller('Billingcontroller',function($scope,$http,$location){
          
             $scope.empty = false;  
           $scope.inValid = false;
+                 
+          $scope.product  =  $scope.AllProducts[(product.ProductId)-1];
+           
+          
+           $scope.product.Units = 1;
         
-       
-           
-          $scope.CartProduct.push($scope.AllProducts[(product.ProductId)-1]);
-  
-           $scope.CartProduct[(product.ProductId)-1].TotalPrice =   $scope.CartProduct[(product.ProductId)-1].Price;
-             $scope.CartProduct[(product.ProductId)-1].Units =1;
-       alert(JSON.stringify($scope.CartProduct[0]));
-           $scope.product  =  $scope.CartProduct[(product.ProductId)-1];
-           
-           
+              $scope.product.TotalPrice = $scope.product.Price;
+            
        }
           
     }
      $scope.AddMore = function(currentProduct) {
-       $scope.product.ToatalPrice=((currentProduct.Units)*(currentProduct.Price));
+       
+         $scope.product.TotalPrice = (currentProduct.Units)*(currentProduct.Price);
+       
      }
+     $scope.Finalize  =function() {
+         
+         if($scope.CartProduct.length<5) {
+             var flag=true;
+        
+             if($scope.CartProduct.length!=0){
+                 for(i=0;i<$scope.CartProduct.length;i++){
+                  if($scope.CartProduct[i].ProductId == $scope.product.ProductId)  {
+                     flag = false;  
+                   $scope.CartProduct[i].Units+=$scope.product.Units;
+                      $scope.CartProduct[i].TotalPrice =  $scope.CartProduct[i].Units *$scope.CartProduct[i].Price;
+                      
+                   }  
+                 }
+             }
+     
+          if(flag){
+              
+           $scope.CartProduct.push( angular.copy($scope.product));
+          }
+         
+         } else {
+            alert("cart is full so redirecting to summary");
+             $location.path('/summary');
+         }
+         
+         $scope.product = "";
+         
+         
+     }
+     
+     
      
  });
    
